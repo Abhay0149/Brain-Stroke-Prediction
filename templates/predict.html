@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stroke Prediction</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .overlay {
+            background: linear-gradient(
+                to right,
+                rgba(0,0,0,0.7),
+                rgba(0,0,0,0.5),
+                rgba(0,0,0,0.7)
+            );
+        }
+    </style>
+</head>
+
+<body class="relative min-h-screen flex items-start justify-center text-white overflow-y-auto py-10">
+
+    <div class="absolute inset-0">
+        <img src="{{ url_for('static', filename='brain2.jpg') }}"
+             class="w-full h-full object-cover brightness-90 contrast-110">
+        <div class="overlay absolute inset-0"></div>
+    </div>
+
+    <div class="relative bg-white/10 backdrop-blur-lg shadow-2xl rounded-2xl p-8 w-full max-w-4xl border border-white/20">
+
+        <h1 class="text-3xl font-bold text-center mb-6">
+            🧠 Stroke Prediction System
+        </h1>
+
+        <form method="POST" class="grid grid-cols-2 gap-4">
+
+            <div>
+                <label class="text-gray-300">Gender</label>
+                <select name="gender" required class="w-full p-2 rounded-lg bg-white/20 border border-white/30 text-white">
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="male" {% if form_data and form_data.get('gender') == 'male' %}selected{% endif %}>Male</option>
+                    <option value="female" {% if form_data and form_data.get('gender') == 'female' %}selected{% endif %}>Female</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="text-gray-300">Age</label>
+                <input type="number" name="age" required
+                value="{{ form_data.get('age') if form_data else '' }}"
+                class="w-full p-2 rounded-lg bg-white/20 border border-white/30 text-white">
+            </div>
+
+            <div>
+                <label class="text-gray-300">Hypertension</label>
+                <select name="hypertension" required class="w-full p-2 rounded-lg bg-white/20 border border-white/30 text-white">
+                    <option value="" disabled selected>Select</option>
+                    <option value="0" {% if form_data and form_data.get('hypertension') == '0' %}selected{% endif %}>No</option>
+                    <option value="1" {% if form_data and form_data.get('hypertension') == '1' %}selected{% endif %}>Yes</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="text-gray-300">Heart Disease</label>
+                <select name="heart_disease" required class="w-full p-2 rounded-lg bg-white/20 border border-white/30 text-white">
+                    <option value="" disabled selected>Select</option>
+                    <option value="0" {% if form_data and form_data.get('heart_disease') == '0' %}selected{% endif %}>No</option>
+                    <option value="1" {% if form_data and form_data.get('heart_disease') == '1' %}selected{% endif %}>Yes</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="text-gray-300">Ever Married</label>
+                <select name="ever_married" required class="w-full p-2 rounded-lg bg-white/20 border border-white/30 text-white">
+                    <option value="" disabled selected>Select</option>
+                    <option value="yes" {% if form_data and form_data.get('ever_married') == 'yes' %}selected{% endif %}>Yes</option>
+                    <option value="no" {% if form_data and form_data.get('ever_married') == 'no' %}selected{% endif %}>No</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="text-gray-300">Work Type</label>
+                <select name="work_type" required class="w-full p-2 rounded-lg bg-white/20 border border-white/30 text-white">
+                    <option value="" disabled selected>Select Work Type</option>
+                    <option value="Private" {% if form_data and form_data.get('work_type') == 'Private' %}selected{% endif %}>Private</option>
+                    <option value="Self-employed" {% if form_data and form_data.get('work_type') == 'Self-employed' %}selected{% endif %}>Self-employed</option>
+                    <option value="Government job" {% if form_data and form_data.get('work_type') == 'Government job' %}selected{% endif %}>Government job</option>
+                    <option value="Children" {% if form_data and form_data.get('work_type') == 'Children' %}selected{% endif %}>Children</option>
+                    <option value="Never Worked" {% if form_data and form_data.get('work_type') == 'Never Worked' %}selected{% endif %}>Never Worked</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="text-gray-300">Residence Type</label>
+                <select name="residence_type" required class="w-full p-2 rounded-lg bg-white/20 border border-white/30 text-white">
+                    <option value="" disabled selected>Select</option>
+                    <option value="Urban" {% if form_data and form_data.get('residence_type') == 'Urban' %}selected{% endif %}>Urban</option>
+                    <option value="Rural" {% if form_data and form_data.get('residence_type') == 'Rural' %}selected{% endif %}>Rural</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="text-gray-300">Smoking Status</label>
+                <select name="smoking_status" required class="w-full p-2 rounded-lg bg-white/20 border border-white/30 text-white">
+                    <option value="" disabled selected>Select</option>
+                    <option value="never smoked" {% if form_data and form_data.get('smoking_status') == 'never smoked' %}selected{% endif %}>Never</option>
+                    <option value="formerly smoked" {% if form_data and form_data.get('smoking_status') == 'formerly smoked' %}selected{% endif %}>Formerly</option>
+                    <option value="smokes" {% if form_data and form_data.get('smoking_status') == 'smokes' %}selected{% endif %}>Smokes</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="text-gray-300">Avg Glucose Level</label>
+                <input type="number" step="any" name="avg_glucose_level" required
+                value="{{ form_data.get('avg_glucose_level') if form_data else '' }}"
+                class="w-full p-2 rounded-lg bg-white/20 border border-white/30 text-white">
+            </div>
+
+            <div>
+                <label class="text-gray-300">BMI</label>
+                <input type="number" step="any" name="bmi" required
+                value="{{ form_data.get('bmi') if form_data else '' }}"
+                class="w-full p-2 rounded-lg bg-white/20 border border-white/30 text-white">
+            </div>
+
+            <div class="col-span-2 mt-4">
+                <button type="submit"
+                    class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 py-3 rounded-lg font-semibold hover:scale-105 transition duration-300 shadow-lg shadow-indigo-500/30">
+                    Predict Now
+                </button>
+            </div>
+
+        </form>
+
+        {% if prediction is not none %}
+        <div class="mt-6 text-center p-4 rounded-lg 
+            {% if prediction == 1 %} bg-red-500/20 {% else %} bg-green-500/20 {% endif %}">
+            
+            <h2 class="text-xl font-semibold">
+                Prediction Result:
+            </h2>
+
+            {% if prediction == 1 %}
+                <p class="text-red-400 font-bold text-lg mt-2">
+                    ⚠️ High Risk of Stroke
+                </p>
+            {% else %}
+                <p class="text-green-400 font-bold text-lg mt-2">
+                    ✅ Low Risk of Stroke
+                </p>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl shadow-lg border border-white/20">
+                {{ graph1|safe }}
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl shadow-lg border border-white/20">
+                {{ graph2|safe }}
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

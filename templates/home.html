@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Stroke Prediction using ML</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .overlay {
+            background: linear-gradient(
+                to right,
+                rgba(0,0,0,0.6),
+                rgba(0,0,0,0.4),
+                rgba(0,0,0,0.6)
+            );
+        }
+    </style>
+</head>
+
+<body class="relative min-h-screen flex items-center justify-center text-white overflow-hidden">
+
+    <!-- Background -->
+    <div class="absolute inset-0">
+        <img src="{{ url_for('static', filename='brain.jpg') }}" 
+             class="w-full h-full object-cover scale-105 brightness-95 contrast-110">
+        <div class="overlay absolute inset-0"></div>
+    </div>
+
+    <!-- SLIGHTLY LESS TRANSPARENT -->
+    <a href="/predict"
+       class="relative text-center px-10 py-10 max-w-3xl rounded-3xl
+       bg-white/5 backdrop-blur-lg   <!-- 👈 NEW (light glass) -->
+       border border-white/20
+       hover:border-white/40
+       transition duration-300 hover:scale-105">
+
+        <!-- Heading -->
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
+            🧠 Brain Stroke Prediction <br>
+            <span class="bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
+                using Machine Learning
+            </span>
+        </h1>
+
+        <!-- Subtext -->
+        <p class="text-md md:text-lg text-gray-300 leading-relaxed mb-8">
+            Harness the power of artificial intelligence to analyze key health indicators 
+            and predict the risk of stroke with speed and precision. 
+            Take proactive steps toward better health today.
+        </p>
+
+        <!-- BUTTON FIX -->
+        <span class="inline-block px-12 py-5 rounded-full 
+            text-xl font-semibold text-white
+            bg-gradient-to-r from-indigo-500/50 to-purple-600/50  <!-- 👈 INCREASED -->
+            backdrop-blur-md border border-white/20
+            hover:from-indigo-500/70 hover:to-purple-600/70
+            hover:shadow-[0_0_30px_rgba(139,92,246,0.5)]
+            transition duration-300">
+
+            🚀 Predict Now
+        </span>
+
+    </a>
+
+</body>
+</html>
